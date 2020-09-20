@@ -6,6 +6,10 @@ APPGs sourced from the [UK Parliament Register of APPGs](https://www.parliament.
 
 Twitter accounts crowd-sourced.
 
+## Current Progress
+
+Twitter: 178/588 ≈ 30%
+
 ## Twitter List
 
 An [APPGs list on Twitter](https://twitter.com/i/lists/1307681477178650627) is maintained using `sync_to_twitter_list.py`.
