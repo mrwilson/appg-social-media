@@ -25,7 +25,7 @@ twitter_list = appgs_in_twitter_list()
 json_list = appgs_in_json()
 
 for appg in [appg for appg in json_list if appg["twitter"].lower() not in twitter_list]:
-    if appg["twitter"].lower() not in twitter_list or len(appg["twitter"]) == 0:
+    if len(appg["twitter"]) == 0:
         continue
 
     print("Adding Twitter for %s : %s" % (appg["name"], appg["twitter"]))
