@@ -9,19 +9,33 @@ auth.set_access_token(credentials.ACCESS_TOKEN, credentials.ACCESS_TOKEN_SECRET)
 
 twitter = API(auth)
 
-appgs = json.load(open("./appg-social-media.json"))
 
-for appg in appgs:
-    if len(appg['twitter']) == 0:
+def appgs_in_twitter_list():
+    appgs = []
+    for appg in Cursor(twitter.list_members, list_id=APPG_LIST_ID).items():
+        appgs.append(appg.screen_name.lower())
+    return appgs
+
+
+def appgs_in_json():
+    return json.load(open("./appg-social-media.json"))
+
+
+twitter_list = appgs_in_twitter_list()
+json_list = appgs_in_json()
+
+for appg in [appg for appg in json_list if appg['twitter'].lower() not in twitter_list]:
+    if appg['twitter'].lower() not in twitter_list or len(appg['twitter']) == 0:
         continue
 
     print("Adding Twitter for %s : %s" % (appg['name'], appg['twitter']))
     twitter.add_list_members(screen_name=[appg['twitter']], list_id=APPG_LIST_ID)
 
-appg_names = [appg['twitter'].lower() for appg in appgs]
+json_handles = [appg['twitter'].lower() for appg in json_list]
 
-for appg in Cursor(twitter.list_members, list_id=APPG_LIST_ID).items():
-    if appg.screen_name.lower() not in appg_names:
-        print("%s in Twitter list but not JSON, removing" % appg.screen_name.lower())
-        twitter.remove_list_members(screen_name=appg.screen_name, list_id=APPG_LIST_ID)
+for appg in twitter_list:
+    if appg in json_handles:
+        continue
+    print("%s in Twitter list but not JSON, removing" % appg)
+    twitter.remove_list_members(screen_name=[appg], list_id=APPG_LIST_ID)
 
