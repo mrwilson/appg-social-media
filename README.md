@@ -8,7 +8,7 @@ Twitter accounts crowd-sourced.
 
 ## Current Progress
 
-Twitter: 179/588 ≈ 30%
+Twitter: 187/609 ≈ 30%
 
 ## Twitter List
 
